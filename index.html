@@ -6,11 +6,42 @@
 img {
 	width:100%;
 }
+.b {
+	display: none;
+}
 </style>
+<script>
+a = (t) => {
+	document.querySelector("#a").style.display = "none";
+	document.querySelector("#b" + t).style.display = "block";
+};
+b = (t) => {
+	document.querySelector("#a").style.display = "block";
+	document.querySelector("#b" + t).style.display = "none";
+}
+</script>
 </head>
 <body>
-<img src="resources\0.jpg"/>
-<img src="resources\1.jpg"/>
+<div id="a">
+<button onclick="a(0)">0</button>
+<button onclick="a(1)">1</button>
+<button onclick="a(2)">2</button>
+<button onclick="a(3)">3</button>
+</div>
+
+<div id="b0" class="b">
+<button onclick="b(0)">4</button>
+<img src="resources\12.jpg"/>
+<img src="resources\13.jpg"/>
+<img src="resources\14.jpg"/>
+<img src="resources\15.jpg"/>
+<img src="resources\16.jpg"/>
+<img src="resources\17.jpg"/>
+<img src="resources\18.jpg"/>
+</div>
+
+<div id="b1" class="b">
+<button onclick="b(1)">4</button>
 <img src="resources\2.jpg"/>
 <img src="resources\3.jpg"/>
 <img src="resources\4.jpg"/>
@@ -21,13 +52,19 @@ img {
 <img src="resources\9.jpg"/>
 <img src="resources\10.jpg"/>
 <img src="resources\11.jpg"/>
-<img src="resources\12.jpg"/>
-<img src="resources\13.jpg"/>
-<img src="resources\14.jpg"/>
-<img src="resources\15.jpg"/>
-<img src="resources\16.jpg"/>
-<img src="resources\17.jpg"/>
-<img src="resources\18.jpg"/>
+</div>
+
+<div id="b2" class="b">
+<button onclick="b(2)">4</button>
+<img src="resources\1.jpg"/>
+<img src="resources\20.jpg"/>
+</div>
+
+<div id="b3" class="b">
+<button onclick="b(3)">4</button>
+<img src="resources\0.jpg"/>
 <img src="resources\19.jpg"/>
+</div>
+
 </body>
 </html>
