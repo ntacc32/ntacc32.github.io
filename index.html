@@ -20,6 +20,8 @@ html {
 <script>
 const key = window.crypto.subtle.importKey("raw", Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
 
+var index;
+
 async function decrypt(id, data) {
 	let iv = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"));
 	for(let i in iv) {
@@ -78,7 +80,7 @@ function load(n) {
 
 let a = new XMLHttpRequest();
 a.onload = (function load() {
-	var index = this.response;
+	var index = JSON.parse(this.responseText);
 	for(let i in index.collections) {
 		let b = document.createElement("button");
 		b.innerText = index.collections[i].name;
@@ -86,7 +88,6 @@ a.onload = (function load() {
 		document.querySelector("#a").appendChild(b);
 	}
 });
-a.responseType = "json";
 a.open("GET", "/index.json");
 a.send();
 </script>
