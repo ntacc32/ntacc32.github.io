@@ -44,7 +44,8 @@ function request(id, type) {
 	a.send();
 }
 
-function load(n) {
+function load(n, index0) {
+	let index = JSON.parse(index0);
 	for(let i in index.collections[n].contents){
 		let c;
 		switch(/\w+/.exec(index.collections[n].contents[i].type)) {
@@ -80,11 +81,11 @@ function load(n) {
 
 let a = new XMLHttpRequest();
 a.onload = (function load() {
-	var index = JSON.parse(this.responseText);
+	let index = JSON.parse(this.responseText);
 	for(let i in index.collections) {
 		let b = document.createElement("button");
 		b.innerText = index.collections[i].name;
-		b.setAttribute("onclick", "load(" + i + ")");
+		b.setAttribute("onclick", "load(" + i + "," + this.responseText + ")");
 		document.querySelector("#a").appendChild(b);
 	}
 });
