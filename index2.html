@@ -12,18 +12,22 @@ async function decrypt(id, data) {
 	return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, await key, data));
 }
 
-async function display(response, type) {
-	let blob = new Blob([await decrypt(response)], {type: type});
+async function display(response, type, id) {
+	let blob = new Blob([await decrypt(id, response)], {type: type});
 	blob.type = "image/webp";
 	url.createObjectURL(blob);
 	document.querySelector("#a").src = URL.createObjectURL(b);
 }
 
-let req = new XMLHttpRequest();
-req.onload = (function() {display(this.response, "image/jpeg")});
-req.responseType = "arraybuffer";
-req.open("GET", "https://ntacc32.github.io/resources/21");
-req.send();
+function request(id, type) {
+	let a = new XMLHttpRequest();
+	a.onload = (function() {display(this.response, type, id)});
+	a.responseType = "arraybuffer";
+	a.open("GET", "https://ntacc32.github.io/resources/" + id);
+	a.send();
+}
+
+request(21, "image/jpeg");
 </script>
 </head>
 <body>
