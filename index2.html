@@ -2,12 +2,12 @@
 <html>
 <head>
 <script>
-const key = window.crypto.subtle.importKey("raw", Uint8Array.fromBase64(new URLSearchParams(window.location.search)).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
+const key = window.crypto.subtle.importKey("raw", Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
 
 async function decrypt(id, data) {
-	let iv = Uint8Array.fromBase64(new URLSearchParams(window.location.search)).get("iv"));
+	let iv = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"));
 	for(let i = 0; i < iv.length; i++) {
-		iv[i] = Uint8Array.fromBase64(new URLSearchParams(window.location.search)).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
+		iv[i] = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
 	}
 	return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, await key, data));
 }
