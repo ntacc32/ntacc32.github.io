@@ -44,27 +44,28 @@ function request(id, type) {
 
 function load(n) {
 	for(let i in index.collections[n].contents){
+		let c;
 		switch(/\w+/.exec(index.collections[n].contents[i].type)) {
 			case "text":
-				let c = document.createElement("p");
+				c = document.createElement("p");
 				c.innerText = index.collections[n].contents[i].text;
 				document.querySelector("#b").appendChild(c);
 			break;
 			case "image":
-				let c = document.createElement("img");
+				c = document.createElement("img");
 				c.id = index.collections[n].contents[i].id;
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
 			break;
 			case "audio": // not tested
-				let c = document.createElement("audio");
+				c = document.createElement("audio");
 				c.id = index.collections[n].contents[i].id;
 				c.setAttribute("controls", "true");
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
 			break;
 			case "video": // not tested
-				let c = document.createElement("video");
+				c = document.createElement("video");
 				c.setAttribute("controls", "true");
 				c.appendChild(document.createElement("source"));
 				c.querySelector("source").id = index.collections[n].contents[i].id;
