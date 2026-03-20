@@ -15,8 +15,7 @@ async function decrypt(id, data) {
 async function display(response, type, id) {
 	let blob = new Blob([await decrypt(id, response)], {type: type});
 	blob.type = "image/webp";
-	URL.createObjectURL(blob);
-	document.querySelector("#a").src = URL.createObjectURL(b);
+	document.querySelector("#a").src = URL.createObjectURL(blob);
 }
 
 function request(id, type) {
