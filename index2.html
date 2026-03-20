@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+const key = window.crypto.subtle.importKey("raw", Uint8Array.fromBase64(new URLSearchParams(window.location.search)).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
+
+async function decrypt(id, data) {
+	let iv = Uint8Array.fromBase64(new URLSearchParams(window.location.search)).get("iv"));
+	for(let i = 0; i < iv.length; i++) {
+		iv[i] = Uint8Array.fromBase64(new URLSearchParams(window.location.search)).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
+	}
+	return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, await key, data));
+}
+
+async function display(response, type) {
+	let blob = new Blob([await decrypt(response)], {type: type});
+	blob.type = "image/webp";
+	url.createObjectURL(blob);
+	document.querySelector("#a").src = URL.createObjectURL(b);
+}
+
+let req = new XMLHttpRequest();
+req.onload = (function() {display(this.response, "image/jpeg")});
+req.responseType = "arraybuffer";
+req.open("GET", "https://github.com/ntacc32/ntacc32.github.io/raw/refs/heads/main/resources/21");
+req.send();
+</script>
+</head>
+<body>
+<img id="a"/>
+</body>
+</html>
