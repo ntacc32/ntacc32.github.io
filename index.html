@@ -3,7 +3,7 @@
 <head>
 <title>mimosa</title>
 <style>
-img {
+img, video {
 	width:100%;
 }
 .b {
@@ -18,65 +18,80 @@ html {
 }
 </style>
 <script>
-a = (t) => {
-	document.querySelector("#a").style.display = "none";
-	document.querySelector("#b" + t).style.display = "block";
-};
-b = (t) => {
-	document.querySelector("#a").style.display = "block";
-	document.querySelector("#b" + t).style.display = "none";
+const key = window.crypto.subtle.importKey("raw", Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
+
+async function decrypt(id, data) {
+	let iv = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"));
+	for(let i in iv) {
+		iv[i] = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
+	}
+	return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, await key, data));
 }
+
+async function display(response, type, id) {
+	let blob = new Blob([await decrypt(id, response)], {type: type});
+	blob.type = "image/webp";
+	document.querySelector("#" + id).src = URL.createObjectURL(blob);
+}
+
+function request(id, type) {
+	let a = new XMLHttpRequest();
+	a.onload = (function() {display(this.response, type, id)});
+	a.responseType = "arraybuffer";
+	a.open("GET", "/resources/" + id);
+	a.send();
+}
+
+function load(n) {
+	for(let i in index.collections[n].contents){
+		switch(/\w+/.exec(index.collections[n].contents[i].type)) {
+			case "text":
+				let c = document.createElement("p");
+				c.innerText = index.collections[n].contents[i].text;
+				document.querySelector("#b").appendChild(c);
+			break;
+			case "image":
+				let c = document.createElement("img");
+				c.id = index.collections[n].contents[i].id;
+				document.querySelector("#b").appendChild(c);
+				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
+			break;
+			case "audio": // not tested
+				let c = document.createElement("audio");
+				c.id = index.collections[n].contents[i].id;
+				c.setAttribute("controls", "true");
+				document.querySelector("#b").appendChild(c);
+				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
+			break;
+			case "video": // not tested
+				let c = document.createElement("video");
+				c.setAttribute("controls", "true");
+				c.appendChild(document.createElement("source"));
+				c.querySelector("source").id = index.collections[n].contents[i].id;
+				document.querySelector("#b").appendChild(c);
+				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
+			break;
+		}
+	}
+}
+
+let a = new XMLHttpRequest();
+a.onload = (function load() {
+	var index = this.response;
+	for(let i in index.collections) {
+		let b = document.createElement("button");
+		b.innerText = index.collections[i].name;
+		b.setAttribute("onclick", "load(" + i + ")");
+		document.querySelector("#a").appendChild(b);
+	}
+});
+a.responseType = "json";
+a.open("GET", "/index.json");
+a.send();
 </script>
 </head>
 <body>
-<div id="a">
-<button onclick="a(0)">0</button>
-<button onclick="a(1)">1</button>
-<button onclick="a(2)">2</button>
-<button onclick="a(3)">3</button>
-</div>
-
-<div id="b0" class="b">
-<button onclick="b(0)">4</button><br/>
-rainy day 08/03/2026
-<img src="resources\12.jpg"/>
-<img src="resources\13.jpg"/>
-<img src="resources\14.jpg"/>
-<img src="resources\15.jpg"/>
-<img src="resources\16.jpg"/>
-<img src="resources\17.jpg"/>
-09/03/2026
-<img src="resources\18.jpg"/>
-</div>
-
-<div id="b1" class="b">
-<button onclick="b(1)">4</button><br/>
-home 07/03/2026
-<img src="resources\2.jpg"/>
-<img src="resources\3.jpg"/>
-<img src="resources\4.jpg"/>
-<img src="resources\5.jpg"/>
-<img src="resources\6.jpg"/>
-<img src="resources\7.jpg"/>
-<img src="resources\8.jpg"/>
-<img src="resources\9.jpg"/>
-<img src="resources\10.jpg"/>
-<img src="resources\11.jpg"/>
-</div>
-
-<div id="b2" class="b">
-<button onclick="b(2)">4</button><br/>
-21/02/2026
-<img src="resources\1.jpg"/>
-using my previous phone 26/01/2026
-<img src="resources\20.jpg"/>
-</div>
-
-<div id="b3" class="b">
-<button onclick="b(3)">4</button><br/>
-<img src="resources\0.jpg"/>
-<img src="resources\19.jpg"/>
-</div>
-
+<div id="a"></div>
+<div id="b"></div>
 </body>
 </html>

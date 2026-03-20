@@ -1,0 +1,112 @@
+{
+	"collections": [
+		{
+			"name": "13/02/2026 0",
+			"contents": [
+				{
+					"type": "image/jpeg",
+					"id": 0
+				}
+			]
+		},
+		{
+			"name": "monochrome 0",
+			"contents": [
+				{
+					"type": "image/jpeg",
+					"id": 1
+				},
+				{
+					"type": "text/plain",
+					"text": "from my old phone, heavily edited"
+				},
+				{
+					"type": "image/jpeg",
+					"id": 20
+				}
+			]
+		},
+		{
+			"name": "08/03/2026 rainy",
+			"contents": [
+				{
+					"type": "image/jpeg",
+					"id": 12
+				},
+				{
+					"type": "image/jpeg",
+					"id": 13
+				},
+				{
+					"type": "image/jpeg",
+					"id": 14
+				},
+				{
+					"type": "image/jpeg",
+					"id": 15
+				},
+				{
+					"type": "image/jpeg",
+					"id": 16
+				},
+				{
+					"type": "image/jpeg",
+					"id": 17
+				},
+				{
+					"type": "text/plain",
+					"text": "09/03/2026"
+				},
+				{
+					"type": "image/jpeg",
+					"id": 18
+				}
+			]
+		},
+		{
+			"name": "07/03/2026 home"
+			"contents": [
+				{
+					"type": "image/jpeg",
+					"id": 2
+				},
+				{
+					"type": "image/jpeg",
+					"id": 3
+				},
+				{
+					"type": "image/jpeg",
+					"id": 4
+				},
+				{
+					"type": "image/jpeg",
+					"id": 5
+				},
+				{
+					"type": "image/jpeg",
+					"id": 6
+				},
+				{
+					"type": "image/jpeg",
+					"id": 7
+				},
+				{
+					"type": "image/jpeg",
+					"id": 8
+				},
+				{
+					"type": "image/jpeg",
+					"id": 9
+				},
+				{
+					"type": "image/jpeg",
+					"id": 10
+				},
+				{
+					"type": "image/jpeg",
+					"id": 11
+				}
+			]
+		}
+	]
+}

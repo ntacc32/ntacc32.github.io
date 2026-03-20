@@ -22,7 +22,7 @@ function request(id, type) {
 	let a = new XMLHttpRequest();
 	a.onload = (function() {display(this.response, type, id)});
 	a.responseType = "arraybuffer";
-	a.open("GET", "https://ntacc32.github.io/resources/" + id);
+	a.open("GET", "/resources/" + id);
 	a.send();
 }
 
