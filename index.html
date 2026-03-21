@@ -85,7 +85,7 @@ a.onload = (function load() {
 	for(let i in index.collections) {
 		let b = document.createElement("button");
 		b.innerText = index.collections[i].name;
-		b.setAttribute("onclick", "load(" + i + "," + this.responseText + ")");
+		b.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
 		document.querySelector("#a").appendChild(b);
 	}
 });
