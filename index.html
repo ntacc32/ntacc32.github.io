@@ -33,7 +33,7 @@ async function decrypt(id, data) {
 async function display(response, type, id) {
 	let blob = new Blob([await decrypt(id, response)], {type: type});
 	blob.type = "image/webp";
-	document.querySelector("#" + id).src = URL.createObjectURL(blob);
+	document.querySelector("#a" + id).src = URL.createObjectURL(blob);
 }
 
 function request(id, type) {
@@ -56,13 +56,13 @@ function load(n, index0) {
 			break;
 			case "image":
 				c = document.createElement("img");
-				c.id = index.collections[n].contents[i].id;
+				c.id = "a" + index.collections[n].contents[i].id;
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
 			break;
 			case "audio": // not tested
 				c = document.createElement("audio");
-				c.id = index.collections[n].contents[i].id;
+				c.id = "a" + index.collections[n].contents[i].id;
 				c.setAttribute("controls", "true");
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
@@ -71,7 +71,7 @@ function load(n, index0) {
 				c = document.createElement("video");
 				c.setAttribute("controls", "true");
 				c.appendChild(document.createElement("source"));
-				c.querySelector("source").id = index.collections[n].contents[i].id;
+				c.querySelector("source").id = "a" + index.collections[n].contents[i].id;
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
 			break;
