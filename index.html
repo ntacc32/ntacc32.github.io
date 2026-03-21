@@ -120,13 +120,13 @@ let a = new XMLHttpRequest();
 a.onload = (function load() {
 	let index = JSON.parse(this.responseText);
 	for(let i in index.collections) {
-		let r = Math.random() * 55 + 200;
-		let g = Math.random() * 55 + 200;
-		let b = Math.random() * 55 + 200;
+		let r = Math.random() * 55;
+		let g = Math.random() * 55;
+		let b = Math.random() * 55;
 		let c = document.createElement("button");
 		c.innerText = index.collections[i].name;
-		c.style.background = "rgb(" + r + "," + g + "," + b + ")";
-		c.style.color = "rgb(" + (400 - r) + "," + (400 - g) + "," + (400 - b) + ")";
+		c.style.background = "rgb(" + (r + 200) + "," + (g + 200) + "," + (b + 200) + ")";
+		c.style.color = "rgb(" + (180 - 2 * r) + "," + (180 - 2 * g) + "," + (180 - 2 * b) + ")";
 		c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
 		document.querySelector("#a").appendChild(c);
 	}
