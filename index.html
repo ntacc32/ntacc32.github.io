@@ -87,13 +87,15 @@ function load(n, index0) {
 			case "image":
 				c = document.createElement("img");
 				c.id = "a" + index.collections[n].contents[i].id;
+				c.setAttribute("alt", "Loading...");
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
 			break;
 			case "audio": // not tested
 				c = document.createElement("audio");
-				c.id = "a" + index.collections[n].contents[i].id;
 				c.setAttribute("controls", "true");
+				c.appendChild(document.createElement("source"));
+				c.querySelector("source").id = "a" + index.collections[n].contents[i].id;
 				document.querySelector("#b").appendChild(c);
 				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
 			break;
