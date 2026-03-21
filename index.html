@@ -100,7 +100,7 @@ function load(n, index0) {
 		c.setAttribute("id", "b" + n);
 		c.setAttribute("class", "b");
 		c.style.display = "block";
-		document.appendChild(c);
+		document.querySelector("#b").appendChild(c);
 		c = document.createElement("p");
 		c.innerText = index.collections[n].name;
 		document.querySelector("#b" + n).appendChild(c);
