@@ -56,7 +56,9 @@ async function decrypt(id, data) {
 }
 
 async function display(response, type, id) {
+	console.log("Received " + id);
 	let blob = new Blob([await decrypt(id, response)], {type: type});
+	if(blob){console.log("Decrypted " + id);};
 	blob.type = "image/webp";
 	document.querySelector("#a" + id).src = URL.createObjectURL(blob);
 }
@@ -67,6 +69,7 @@ function request(id, type) {
 	a.responseType = "arraybuffer";
 	a.open("GET", "/resources/" + id);
 	a.send();
+	console.log("Request sent for " + id);
 }
 
 function load(n, index0) {
