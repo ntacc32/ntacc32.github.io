@@ -113,14 +113,6 @@
 			"contents": [
 				{
 					"type": "image/jpeg",
-					"id": 22
-				},
-				{
-					"type": "text/plain",
-					"text": "it started raining"
-				},
-				{
-					"type": "image/jpeg",
 					"id": 23
 				},
 				{
@@ -181,7 +173,7 @@
 				},
 				{
 					"type": "text/plain",
-					"text": "are these better edited or original?"
+					"text": "edited"
 				},
 				{
 					"type": "image/jpeg",
@@ -194,6 +186,10 @@
 				{
 					"type": "image/jpeg",
 					"id": 40
+				},
+				{
+					"type": "image/jpeg",
+					"id": 22
 				}
 			]
 		}
