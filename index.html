@@ -26,8 +26,8 @@ button {
 function fromBase64(str, options) { // for compatibility
 	let data = str;
 	if(options.alphabet == "base64url") {
-		data.replace(/-/, "+");
-		data.replace(/_/, "/");
+		data = data.replace(/-/, "+");
+		data = data.replace(/_/, "/");
 	}
     let array = new Uint8Array(atob(data).length);
     for (let i in atob(data)) {
