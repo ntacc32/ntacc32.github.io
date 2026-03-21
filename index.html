@@ -6,9 +6,6 @@
 img, video {
 	width:100%;
 }
-.b {
-	display: none;
-}
 body {
 	color: white;
 	font-family: "Roboto", monospace;
@@ -16,16 +13,35 @@ body {
 html {
 	scrollbar-width: none;
 }
+button {
+	margin: 0.3%;
+	width: 48.8%;
+	height: 30px;
+	background: mintcream;
+	border: none;
+	box-shadow: 1px 1px 1px 0.3px #aaaaaa;
+}
 </style>
 <script>
-const key = window.crypto.subtle.importKey("raw", Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
+function fromBase64(str, options) { // for compatibility
+	let data = str;
+	if(options.alphabet == "base64url") {
+		data.replace(/-/, "+");
+		data.replace(/_/, "/");
+	}
+    let array = new Uint8Array(atob(data).length);
+    for (let i in atob(data)) {
+        array[i] = atob(data).charCodeAt(i);
+    }
+    return array;
+}
 
-var index;
+const key = window.crypto.subtle.importKey("raw", fromBase64(new URLSearchParams(window.location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
 
 async function decrypt(id, data) {
-	let iv = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"));
+	let iv = fromBase64(new URLSearchParams(window.location.search).get("iv"));
 	for(let i in iv) {
-		iv[i] = Uint8Array.fromBase64(new URLSearchParams(window.location.search).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
+		iv[i] = fromBase64(new URLSearchParams(window.location.search).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
 	}
 	return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, await key, data));
 }
@@ -46,6 +62,8 @@ function request(id, type) {
 
 function load(n, index0) {
 	let index = JSON.parse(index0);
+	document.querySelector("#a").style.display = "none";
+	document.querySelector("#return").style.display = "block";
 	for(let i in index.collections[n].contents){
 		let c;
 		switch(/\w+/.exec(index.collections[n].contents[i].type)[0]) {
@@ -94,6 +112,7 @@ a.send();
 </script>
 </head>
 <body>
+<button id="return" style="display:none;">return</button>
 <div id="a"></div>
 <div id="b"></div>
 </body>
