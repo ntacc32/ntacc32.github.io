@@ -128,7 +128,7 @@ a.onload = (function load() {
 		c.style.background = "rgb(" + r + "," + g + "," + b + ")";
 		c.style.color = "rgb(" + (455 - r) + "," + (455 - g) + "," + (455 - b) + ")";
 		c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
-		document.querySelector("#a").appendChild(b);
+		document.querySelector("#a").appendChild(c);
 	}
 });
 a.open("GET", "/index.json");
