@@ -23,17 +23,23 @@ button {
 }
 </style>
 <script>
-function fromBase64(str, options = {alphabet: null}) { // for compatibility
-	let data = str;
-	if(options.alphabet == "base64url") {
-		data = data.replace(/-/, "+");
-		data = data.replace(/_/, "/");
-	}
-    let array = new Uint8Array(atob(data).length);
-    for (let i in atob(data)) {
-        array[i] = atob(data).charCodeAt(i);
-    }
-    return array;
+let fromBase64;
+
+if(Uint8Array.fromBase64) {
+	fromBase64 = Uint8Array.fromBase64;
+} else {
+	fromBase64 = function(str, options = {alphabet: null}) { // for compatibility
+		let data = str;
+		if(options.alphabet == "base64url") {
+			data = data.replace(/-/, "+");
+			data = data.replace(/_/, "/");
+		}
+		let array = new Uint8Array(atob(data).length);
+		for (let i in atob(data)) {
+			array[i] = atob(data).charCodeAt(i);
+		}
+		return array;
+	};
 }
 
 const key = crypto.subtle.importKey("raw", fromBase64(new URLSearchParams(location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
