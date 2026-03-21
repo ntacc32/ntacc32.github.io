@@ -8,11 +8,19 @@ img, video {
 }
 body {
 	color: white;
-	font-family: monospace;
+	font-family: "Consolas", monospace;
 }
 html {
 	scrollbar-width: none;
 }
+/*@keyframes shadowappear {
+	from {
+		box-shadow: 1px 1px 3px 0.3px #aaaaaa;
+	}
+	to {
+		box-shadow: 1.4px 1.7px 3px 0.4px #777777;
+	}
+}*/
 button {
 	margin: 0.3%;
 	width: 48.8%;
@@ -23,11 +31,15 @@ button {
 	text-align: left;
 	padding-left: 2%;
 }
-#return {
-	background: mintcream;
+button:hover {
+	/*animation: shadowappear 0.2s ease-out 0.1s;*/
+	box-shadow: 1.4px 1.7px 3px 0.4px #777777;
 }
-#a {
-	margin-top: 10px;
+#return {
+	margin-bottom: 10px;
+}
+p {
+	margin-bottom: 0px;
 }
 </style>
 <script>
@@ -116,6 +128,12 @@ function load(n, index0) {
 	}
 }
 
+let r = Math.random() * 55;
+let g = Math.random() * 55;
+let b = Math.random() * 55;
+document.querySelector("#return").style.background = "rgb(" + (r + 200) + "," + (g + 200) + "," + (b + 200) + ")";
+document.querySelector("#return").style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
+
 let a = new XMLHttpRequest();
 a.onload = (function load() {
 	let index = JSON.parse(this.responseText);
@@ -126,7 +144,7 @@ a.onload = (function load() {
 		let c = document.createElement("button");
 		c.innerText = index.collections[i].name;
 		c.style.background = "rgb(" + (r + 200) + "," + (g + 200) + "," + (b + 200) + ")";
-		c.style.color = "rgb(" + (180 - 2 * r) + "," + (180 - 2 * g) + "," + (180 - 2 * b) + ")";
+		c.style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
 		c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
 		document.querySelector("#a").appendChild(c);
 	}
