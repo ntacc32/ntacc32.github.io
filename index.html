@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>mimosa</title>
 <style>
 img, video {
 	width:100%;
@@ -30,7 +29,7 @@ button {
 	font-family: monospace;
 	text-align: left;
 	padding-left: 2%;
-	cursor: pointer;
+	
 }
 button:hover {
 	/*animation: shadowappear 0.2s ease-out 0.1s;*/
@@ -128,12 +127,6 @@ function load(n, index0) {
 	}
 }
 
-let r = Math.random() * 55;
-let g = Math.random() * 55;
-let b = Math.random() * 55;
-document.querySelector("#return").style.background = "rgb(" + (r + 200) + "," + (g + 200) + "," + (b + 200) + ")";
-document.querySelector("#return").style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
-
 let a = new XMLHttpRequest();
 a.onload = (function load() {
 	let index = JSON.parse(this.responseText);
@@ -162,5 +155,13 @@ function refresh() {
 <button id="return" style="display:none;" onclick="refresh();">return</button>
 <div id="a"></div>
 <div id="b"></div>
+<script>
+// P.S. I wonder if this could be called a postscript?
+let r = Math.random() * 55;
+let g = Math.random() * 55;
+let b = Math.random() * 55;
+document.querySelector("#return").style.background = "rgb(" + (r + 200) + "," + (g + 200) + "," + (b + 200) + ")";
+document.querySelector("#return").style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
+</script>
 </body>
 </html>
