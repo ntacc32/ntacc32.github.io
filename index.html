@@ -21,6 +21,9 @@ button {
 	border: none;
 	box-shadow: 1px 1px 1px 0.3px #aaaaaa;
 }
+#a {
+	margin-top: 10px;
+}
 </style>
 <script>
 let fromBase64;
@@ -115,10 +118,15 @@ a.onload = (function load() {
 });
 a.open("GET", "/index.json");
 a.send();
+function refresh() {
+	document.querySelector("#return").style.display = "none";
+	document.querySelector("#a").style.display = "block";
+	document.querySelector("#return").style.display = "none";
+}
 </script>
 </head>
 <body>
-<button id="return" style="display:none;">return</button>
+<button id="return" style="display:none;" onclick="refresh();">return</button>
 <div id="a"></div>
 <div id="b"></div>
 </body>
