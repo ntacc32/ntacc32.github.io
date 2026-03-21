@@ -48,7 +48,7 @@ function load(n, index0) {
 	let index = JSON.parse(index0);
 	for(let i in index.collections[n].contents){
 		let c;
-		switch(/\w+/.exec(index.collections[n].contents[i].type)) {
+		switch(/\w+/.exec(index.collections[n].contents[i].type)[0]) {
 			case "text":
 				c = document.createElement("p");
 				c.innerText = index.collections[n].contents[i].text;
