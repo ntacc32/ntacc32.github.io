@@ -90,42 +90,51 @@ function request(id, type) {
 }
 
 function load(n, index0) {
-	let index = JSON.parse(index0), c;
-	document.querySelector("#a").style.display = "none";
-	document.querySelector("#return").style.display = "block";
-	c = document.createElement("p");
-	c.innerText = index.collections[n].name;
-	document.querySelector("#b").appendChild(c);
-	for(let i in index.collections[n].contents){
-		switch(/\w+/.exec(index.collections[n].contents[i].type)[0]) {
-			case "text":
-				c = document.createElement("p");
-				c.innerText = index.collections[n].contents[i].text;
-				document.querySelector("#b").appendChild(c);
-			break;
-			case "image":
-				c = document.createElement("img");
-				c.id = "a" + index.collections[n].contents[i].id;
-				c.setAttribute("alt", "Loading...");
-				document.querySelector("#b").appendChild(c);
-				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
-			break;
-			case "audio": // not tested
-				c = document.createElement("audio");
-				c.setAttribute("controls", "true");
-				c.appendChild(document.createElement("source"));
-				c.querySelector("source").id = "a" + index.collections[n].contents[i].id;
-				document.querySelector("#b").appendChild(c);
-				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
-			break;
-			case "video": // not tested
-				c = document.createElement("video");
-				c.setAttribute("controls", "true");
-				c.appendChild(document.createElement("source"));
-				c.querySelector("source").id = "a" + index.collections[n].contents[i].id;
-				document.querySelector("#b").appendChild(c);
-				request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
-			break;
+	if(document.querySelector("#b" + n)) {
+		document.querySelector("#b" + n).style.display = "block";
+	} else {
+		let index = JSON.parse(index0), c;
+		document.querySelector("#a").style.display = "none";
+		document.querySelector("#return").style.display = "block";
+		c = document.createElement("div");
+		c.setAttribute("id", "b" + n);
+		c.setAttribute("class", "b");
+		c.style.display = "block";
+		document.appendChild(c);
+		c = document.createElement("p");
+		c.innerText = index.collections[n].name;
+		document.querySelector("#b" + n).appendChild(c);
+		for(let i in index.collections[n].contents){
+			switch(/\w+/.exec(index.collections[n].contents[i].type)[0]) {
+				case "text":
+					c = document.createElement("p");
+					c.innerText = index.collections[n].contents[i].text;
+					document.querySelector("#b" + n).appendChild(c);
+				break;
+				case "image":
+					c = document.createElement("img");
+					c.id = "a" + index.collections[n].contents[i].id;
+					c.setAttribute("alt", "Loading...");
+					document.querySelector("#b" + n).appendChild(c);
+					request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
+				break;
+				case "audio": // not tested
+					c = document.createElement("audio");
+					c.setAttribute("controls", "true");
+					c.appendChild(document.createElement("source"));
+					c.querySelector("source").id = "a" + index.collections[n].contents[i].id;
+					document.querySelector("#b" + n).appendChild(c);
+					request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
+				break;
+				case "video": // not tested
+					c = document.createElement("video");
+					c.setAttribute("controls", "true");
+					c.appendChild(document.createElement("source"));
+					c.querySelector("source").id = "a" + index.collections[n].contents[i].id;
+					document.querySelector("#b" + n).appendChild(c);
+					request(index.collections[n].contents[i].id, index.collections[n].contents[i].type);
+				break;
+			}
 		}
 	}
 }
@@ -150,7 +159,7 @@ a.send();
 function refresh() {
 	document.querySelector("#return").style.display = "none";
 	document.querySelector("#a").style.display = "block";
-	document.querySelector("#b").innerHTML = "";
+	document.querySelector(".b[display=block]").display = "none";
 }
 </script>
 </head>
