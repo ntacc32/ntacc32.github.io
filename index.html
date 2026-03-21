@@ -8,7 +8,7 @@ img, video {
 }
 body {
 	color: white;
-	font-family: "Roboto", monospace;
+	font-family: monospace;
 }
 html {
 	scrollbar-width: none;
@@ -17,9 +17,14 @@ button {
 	margin: 0.3%;
 	width: 48.8%;
 	height: 30px;
-	background: mintcream;
 	border: none;
 	box-shadow: 1px 1px 1px 0.3px #aaaaaa;
+	font-family: monospace;
+	text-align: left;
+	padding-left: 2%;
+}
+#return {
+	background: mintcream;
 }
 #a {
 	margin-top: 10px;
@@ -115,9 +120,14 @@ let a = new XMLHttpRequest();
 a.onload = (function load() {
 	let index = JSON.parse(this.responseText);
 	for(let i in index.collections) {
-		let b = document.createElement("button");
-		b.innerText = index.collections[i].name;
-		b.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
+		let r = Math.random() * 55 + 200;
+		let g = Math.random() * 55 + 200;
+		let b = Math.random() * 55 + 200;
+		let c = document.createElement("button");
+		c.innerText = index.collections[i].name;
+		c.style.background = "rgb(" + r + "," + g + "," + b + ")";
+		c.style.color = "rgb(" + (455 - r) + "," + (455 - g) + "," + (455 - b) + ")";
+		c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
 		document.querySelector("#a").appendChild(b);
 	}
 });
