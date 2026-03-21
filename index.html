@@ -90,12 +90,12 @@ function request(id, type) {
 }
 
 function load(n, index0) {
+	document.querySelector("#a").style.display = "none";
+	document.querySelector("#return").style.display = "block";
 	if(document.querySelector("#b" + n)) {
 		document.querySelector("#b" + n).style.display = "block";
 	} else {
 		let index = JSON.parse(index0), c;
-		document.querySelector("#a").style.display = "none";
-		document.querySelector("#return").style.display = "block";
 		c = document.createElement("div");
 		c.setAttribute("id", "b" + n);
 		c.setAttribute("class", "b");
