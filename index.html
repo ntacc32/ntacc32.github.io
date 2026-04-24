@@ -92,13 +92,13 @@ function request(id, type) {
 	console.log("Request sent for " + id);
 }
 
-function load(n, index) {
+function load(n, index0) {
 	document.querySelector("#a").style.display = "none";
 	document.querySelector("#return").style.display = "block";
 	if(document.querySelector("#b" + n)) {
 		document.querySelector("#b" + n).style.display = "block";
 	} else {
-		let c;
+		let index = JSON.parse(index0), c;
 		c = document.createElement("div");
 		c.setAttribute("id", "b" + n);
 		c.setAttribute("class", "b");
@@ -160,7 +160,7 @@ if(!key || !params[1]) {
 }
 
 let a = new XMLHttpRequest();
-function loadIndex(index, dummy) {
+function loadIndex(index, dummy, index0) {
 	let bias0 = [6, 5, 4];
 	let bias4 = 2;
 	let bias1 = [Math.pow(Math.random(), bias0[0]) * bias4 + 1, Math.pow(Math.random(), bias0[1]) * bias4 + 1, Math.pow(Math.random(), bias0[2]) * bias4 + 1];
@@ -176,13 +176,13 @@ function loadIndex(index, dummy) {
 		c.style.background = "rgb(" + (r + 255 - 48 / bias1[0] / bias2) + "," + (g + 255 - 48 / bias1[1] / bias2) + "," + (b + 255 - 48 / bias1[2] / bias2) + ")";
 		c.style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
 		if(!dummy && params[0] && params[1]) {
-			c.setAttribute("onclick", "load(" + i + ",`" + index + "`)");
+			c.setAttribute("onclick", "load(" + i + ",`" + index0 + "`)");
 		}
 		document.querySelector("#a").appendChild(c);
 	}
 }
 a.onload = (function() {
-	loadIndex(JSON.parse(this.responseText), 0);
+	loadIndex(JSON.parse(this.responseText), 0, this.responseText);
 	
 });
 a.onerror = (function() {
@@ -191,7 +191,7 @@ a.onerror = (function() {
 	for(let i = 0; i < 64; i++) {
 		fakeIndex.collections.push({name: i});
 	}
-	loadIndex(fakeIndex, 1);	
+	loadIndex(fakeIndex, 1, 0);	
 });
 a.open("GET", "./index.json");
 a.send();
