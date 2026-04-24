@@ -62,7 +62,7 @@ if(Uint8Array.fromBase64) {
 	};
 }
 
-var params = [new URLSearchParams(location.seach).get("key"), new URLSearchParams(location.seach).get("iv")];
+var params = [new URLSearchParams(location.search).get("key"), new URLSearchParams(location.search).get("iv")];
 if(params[0] && params[1]) {
 	var key = crypto.subtle.importKey("raw", fromBase64(params[0], {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
 }
