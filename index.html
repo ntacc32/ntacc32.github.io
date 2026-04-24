@@ -62,12 +62,15 @@ if(Uint8Array.fromBase64) {
 	};
 }
 
-const key = crypto.subtle.importKey("raw", fromBase64(new URLSearchParams(location.search).get("key"), {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
+var params = [new URLSearchParams(location.seach).get("key"), new URLSearchParams(location.seach).get("iv")];
+if(params[0] && params[1]) {
+	var key = crypto.subtle.importKey("raw", fromBase64(params[0], {alphabet:"base64url"}).buffer, {name: "AES-GCM", length: 256}, true, ["decrypt"]);
+}
 
 async function decrypt(id, data) {
-	let iv = fromBase64(new URLSearchParams(location.search).get("iv"));
+	let iv = fromBase64(params[1]);
 	for(let i in iv) {
-		iv[i] = fromBase64(new URLSearchParams(location.search).get("iv"))[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
+		iv[i] = fromBase64(params[1])[i] ^ ((((((id * 3) << 3) * 5) << 2) * 7) % 256); // hopefully random characters makes it more secure!
 	}
 	return new Uint8Array(await crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, await key, data));
 }
@@ -139,23 +142,6 @@ function load(n, index0) {
 	}
 }
 
-let a = new XMLHttpRequest();
-a.onload = (function load() {
-	let index = JSON.parse(this.responseText);
-	for(let i in index.collections) {
-		let r = Math.random() * 55;
-		let g = Math.random() * 55;
-		let b = Math.random() * 55;
-		let c = document.createElement("button");
-		c.innerText = index.collections[i].name;
-		c.style.background = "rgb(" + (r + 200) + "," + (g + 200) + "," + (b + 200) + ")";
-		c.style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
-		c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
-		document.querySelector("#a").appendChild(c);
-	}
-});
-a.open("GET", "/index.json");
-a.send();
 function refresh() {
 	document.querySelector("#return").style.display = "none";
 	document.querySelector("#a").style.display = "block";
@@ -164,11 +150,52 @@ function refresh() {
 </script>
 </head>
 <body>
+<div style="color:black;"><div id="key"></div><div id="index"></div></div>
 <button id="return" style="display:none;" onclick="refresh();">return</button>
 <div id="a"></div>
 <div id="b"></div>
 <script>
-// P.S. I wonder if this could be called a postscript?
+if(!key || !params[1]) {
+	document.querySelector("#key").innerText = "The key is missing or malformed.";
+}
+
+let a = new XMLHttpRequest();
+function loadIndex(index, dummy) {
+	let bias0 = [6, 5, 4];
+	let bias4 = 2;
+	let bias1 = [Math.pow(Math.random(), bias0[0]) * bias4 + 1, Math.pow(Math.random(), bias0[1]) * bias4 + 1, Math.pow(Math.random(), bias0[2]) * bias4 + 1];
+	let bias3 = Math.min(bias1[0], bias1[1], bias1[2]) - 1;
+	bias1 = [bias1[0] - bias3, bias1[1] - bias3, bias1[2] - bias3];
+	let bias2 = (bias1[0] + bias1[1] + bias1[2] - 3) / 4 + 1;
+	for(let i in index.collections) {
+		let r = Math.pow(Math.random(), bias1[0] + 1) * 48 / bias1[0] / bias2;
+		let g = Math.pow(Math.random(), bias1[0] + 1) * 48 / bias1[1] / bias2;
+		let b = Math.pow(Math.random(), bias1[0] + 1) * 48 / bias1[2] / bias2;
+		let c = document.createElement("button");
+		c.innerText = index.collections[i].name;
+		c.style.background = "rgb(" + (r + 255 - 48 / bias1[0] / bias2) + "," + (g + 255 - 48 / bias1[1] / bias2) + "," + (b + 255 - 48 / bias1[2] / bias2) + ")";
+		c.style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
+		if(!dummy && params[0] && params[1]) {
+			c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
+		}
+		document.querySelector("#a").appendChild(c);
+	}
+}
+a.onload = (function() {
+	loadIndex(JSON.parse(this.responseText), 0);
+	
+});
+a.onerror = (function() {
+	document.querySelector("#index").innerText = "An exception occurred when the fetching the index. A dummy index is shown here.";
+	let fakeIndex = {collections:[]};
+	for(let i = 0; i < 64; i++) {
+		fakeIndex.collections.push({name: i});
+	}
+	loadIndex(fakeIndex, 1);	
+});
+a.open("GET", "./index.json");
+a.send();
+
 let r = Math.random() * 55;
 let g = Math.random() * 55;
 let b = Math.random() * 55;
