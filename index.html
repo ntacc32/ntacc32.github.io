@@ -92,13 +92,13 @@ function request(id, type) {
 	console.log("Request sent for " + id);
 }
 
-function load(n, index0) {
+function load(n, index) {
 	document.querySelector("#a").style.display = "none";
 	document.querySelector("#return").style.display = "block";
 	if(document.querySelector("#b" + n)) {
 		document.querySelector("#b" + n).style.display = "block";
 	} else {
-		let index = JSON.parse(index0), c;
+		let c;
 		c = document.createElement("div");
 		c.setAttribute("id", "b" + n);
 		c.setAttribute("class", "b");
@@ -176,7 +176,7 @@ function loadIndex(index, dummy) {
 		c.style.background = "rgb(" + (r + 255 - 48 / bias1[0] / bias2) + "," + (g + 255 - 48 / bias1[1] / bias2) + "," + (b + 255 - 48 / bias1[2] / bias2) + ")";
 		c.style.color = "rgb(" + (170 - 2 * r) + "," + (170 - 2 * g) + "," + (170 - 2 * b) + ")";
 		if(!dummy && params[0] && params[1]) {
-			c.setAttribute("onclick", "load(" + i + ",`" + this.responseText + "`)");
+			c.setAttribute("onclick", "load(" + i + ",`" + index + "`)");
 		}
 		document.querySelector("#a").appendChild(c);
 	}
