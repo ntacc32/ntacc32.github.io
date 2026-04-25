@@ -8,7 +8,6 @@ img, video {
 body {
 	color: white;
 	font-family: "Consolas", monospace;
-	background: Canvas;
 }
 html {
 	scrollbar-width: none;
@@ -171,7 +170,7 @@ function refresh() {
 <div id="a"></div>
 <div id="b"></div>
 <script>
-if(window.getComputedStyle(document.body).background == "rgb(255, 255, 255)") {
+if(new URLSearchParams(location.search).get("test")) {
 	document.body.style.background = "#1E1E1E";
 }
 
@@ -251,7 +250,7 @@ function bubble() {
 	}
 }
 
-var effects = [[Math.round(Math.random()), Math.random()], [new URLSearchParams(location.search).get("shimmer"), 0.01]];
+var effects = [[Math.round(Math.random()), Math.random()], [(new URLSearchParams(location.search).get("shimmer") ? 1 : 0), 0.01]];
 if(effects[0][0]) {
 	document.querySelector("#blur").style.backdropFilter = "blur(5px)";
 	var bubbles = [];
