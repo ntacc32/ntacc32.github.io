@@ -250,7 +250,7 @@ function bubble() {
 	}
 }
 
-var effects = [[Math.round(Math.random()), Math.random()], [(new URLSearchParams(location.search).get("shimmer") ? 1 : 0), 0.01]];
+var effects = [[(new URLSearchParams(location.search).get("shimmer") ? Math.round(Math.random()) : 0), Math.random()], [new URLSearchParams(location.search).get("shimmer"), 0.01]];
 if(effects[0][0]) {
 	document.querySelector("#blur").style.backdropFilter = "blur(5px)";
 	var bubbles = [];
