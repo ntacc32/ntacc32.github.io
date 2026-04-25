@@ -270,8 +270,8 @@ if(effects[0][0]) {
 if(effects[1][0]) {
 	var shimmers = 10, shimmer = [colour([0, 7, 5], 2, shimmers, 200, 80), colour([1, 7, 5], 2, shimmers, 200, 80), [], [], [], []], grad;
 	for(let i = 0; i < shimmers; i++) {
-		shimmer[2].push(Math.random() / 1);
-		shimmer[3].push(Math.random() / 1);
+		shimmer[2].push(Math.random() / 10);
+		shimmer[3].push(Math.random() / 10);
 		shimmer[4].push(40 / shimmers * (i + Math.pow(Math.random(), 3)) + 140);
 		shimmer[5].push(40 / shimmers * (i + Math.pow(Math.random(), 3)) + 140);
 	}
