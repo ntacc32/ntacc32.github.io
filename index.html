@@ -31,13 +31,13 @@ button {
 	text-align: left;
 	padding-left: 2%;
 	cursor: pointer;
-	color: #1E1E1E;
 }
 button:hover {
 	/*animation: shadowappear 0.2s ease-out 0.1s;*/
 }
 #return {
 	margin-bottom: 10px;
+	width: calc(min(48.8%, 244px));
 }
 p {
 	margin-bottom: 0px;
@@ -202,6 +202,8 @@ function loadIndex(index, dummy, index0) {
 		let c = document.createElement("button");
 		c.innerText = index.collections[i].name;
 		c.style.background = "rgb(" + b[i][0] + "," + b[i][1] + "," + b[i][2] + ")";
+		//c.style.color = "rgb(" + (300 - b[i][0]) + "," + (300 - b[i][1]) + "," + (300 - b[i][2]) + ")";
+		c.style.color = "rgb(" + ((b[i][0] - 200) * 2 + 30) + "," + ((b[i][1] - 200) * 2 + 30) + "," + ((b[i][2] - 200) * 2 + 30) + ")";
 		if(!dummy && params[0] && params[1]) {
 			c.setAttribute("onclick", "load(" + i + ",`" + index0 + "`)");
 		}
